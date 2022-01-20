@@ -1,24 +1,50 @@
+let regex = /:\d\d/
+
 class Clock extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currentDisplay: "25"
+      currentSessionDisplay: "25:59"
     }
     
-    this.handleInputTimeChange=this.handleInputTimeChange.bind(this)
+    //this.countdown=this.countdown.bind(this)
     this.lowerSession=this.lowerSession.bind(this)
+    this.raiseSession=this.raiseSession.bind(this)
+    this.startStop=this.startStop.bind(this)
   }
 
-  handleInputTimeChange(e) {
-    this.setState({
-      currentDisplay: e
-    }) 
-  }
+
+  
+  startStop() {
+    let colonSeconds= this.state.currentSessionDisplay.match(regex)
+    console.log(colonSeconds)
+    //let secondsSplit= colonSeconds[0].split('')
+    //secondsSplit.shift()
+    //let seconds = secondsSplit.join('')
+    //seconds-=1
+    
+    setInterval(this.startStop, 1000);
+ 
+}
+
 
 lowerSession() {
+  let colonSeconds= this.state.currentSessionDisplay.match(regex)
+  //console.log(colonSeconds)
+  let secondsSplit= colonSeconds[0].split('')
+  secondsSplit.shift()
+  let seconds = secondsSplit.join('')
+
+
   this.setState({
-    currentDisplay: (parseInt(this.state.currentDisplay) - 1)
+    currentSessionDisplay: (parseInt(this.state.currentSessionDisplay) - 1 + ":00")
+  })
+}
+
+raiseSession() {
+  this.setState({
+    currentSessionDisplay: (parseInt(this.state.currentSessionDisplay) + 1 + ":00")
   })
 }
 
@@ -26,18 +52,19 @@ lowerSession() {
     return (
       <div>
      <h1>25 + 5 Clock</h1>
-     {this.state.currentDisplay}
+     {this.state.currentSessionDisplay}
      
       <Session 
-        onInputTimeChange = {this.handleInputTimeChange} 
         lowerSession = {this.lowerSession}
-        currentDisplay ={this.state.currentDisplay}/>
+        raiseSession = {this.raiseSession}
+        currentSessionDisplay ={this.state.currentSessionDisplay}/>
+
+        <button onClick={this.startStop}>Start/Stop</button>
   
     </div>
       );
     }
   }
-  
 
 /////////////////////////////////////////////
 
@@ -49,27 +76,27 @@ lowerSession() {
     sessionLength: "25"
     
   }
-  this.handleInputTimeChange2=this.handleInputTimeChange2.bind(this)
+
   this.lowerSession=this.lowerSession.bind(this)
+  this.raiseSession=this.raiseSession.bind(this)
   
   }
   
-  handleInputTimeChange2(e) {
-    this.props.onInputTimeChange(e.target.value)
   
-
-  }
-
   lowerSession() {
     this.props.lowerSession()
+  }
+
+  raiseSession() {
+    this.props.raiseSession()
   }
   
           render() {
             return (
               <div>
-              <h1>SESSION LENGTH</h1>
-              <input onChange = {this.handleInputTimeChange2}/>
-              <button onClick = {this.lowerSession}>Lower Session Time</button>
+              <h1 id="session-label">Session Length</h1>
+              <button id="session-decrement" onClick = {this.lowerSession}>Lower Session Time</button>
+              <button id="session-increment" onClick = {this.raiseSession}>Raise Session Time</button>
               </div>
             )
           }
@@ -112,11 +139,6 @@ lowerSession() {
               )
             }
           }*/
-
-
-
-
-
 
 
   ReactDOM.render(<Clock/>, document.getElementById("app"))
