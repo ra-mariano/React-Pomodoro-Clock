@@ -1,40 +1,50 @@
 let regex = /:\d\d/
 
+
 class Clock extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currentSessionDisplay: "25:59"
+      currentSessionDisplay: "25"
     }
     
     //this.countdown=this.countdown.bind(this)
     this.lowerSession=this.lowerSession.bind(this)
     this.raiseSession=this.raiseSession.bind(this)
-    this.startStop=this.startStop.bind(this)
-  }
+    //this.startStop=this.startStop.bind(this)
 
-
-  
-  startStop() {
-    let colonSeconds= this.state.currentSessionDisplay.match(regex)
-    console.log(colonSeconds)
-    //let secondsSplit= colonSeconds[0].split('')
-    //secondsSplit.shift()
-    //let seconds = secondsSplit.join('')
-    //seconds-=1
     
-    setInterval(this.startStop, 1000);
- 
-}
 
+  }
+  
+
+  /*startStop() {
+    
+    let colonSeconds= this.state.currentSessionDisplay.match(regex)
+    let secondsSplit= colonSeconds[0].split('')
+    secondsSplit.shift()
+    let seconds=secondsSplit.join('')
+    
+  seconds-=1
+  console.log(seconds)
+      
+  
+    } */
+  
+  
+  /*startStop() {
+    let colonSeconds= this.state.currentSessionDisplay.match(regex)
+    let secondsSplit= colonSeconds[0].split('')
+    secondsSplit.shift()
+    let seconds = secondsSplit.join('')
+    let
+  }*/
+  
+  
 
 lowerSession() {
-  let colonSeconds= this.state.currentSessionDisplay.match(regex)
-  //console.log(colonSeconds)
-  let secondsSplit= colonSeconds[0].split('')
-  secondsSplit.shift()
-  let seconds = secondsSplit.join('')
+  
 
 
   this.setState({
@@ -48,18 +58,43 @@ raiseSession() {
   })
 }
 
-  render() {
+render() {
+ let seconds = this.state.currentSessionDisplay
+/*
+var counter = 10;
+setInterval(function(){
+  console.log(counter);
+  counter--
+  if (counter === 0) {
+    console.log("HAPPY NEW YEAR!!");
+  }
+}, 1000); */
     return (
+      
       <div>
+
+        
+{setInterval(function(){
+  console.log(seconds);
+  seconds--
+  if (seconds < 0) {
+    seconds=59;
+  }
+}, 1000)};
+
+
+
+
      <h1>25 + 5 Clock</h1>
      {this.state.currentSessionDisplay}
+     
      
       <Session 
         lowerSession = {this.lowerSession}
         raiseSession = {this.raiseSession}
         currentSessionDisplay ={this.state.currentSessionDisplay}/>
 
-        <button onClick={this.startStop}>Start/Stop</button>
+        <button>Start/Stop</button>
   
     </div>
       );
