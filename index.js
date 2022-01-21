@@ -13,7 +13,7 @@ class Clock extends React.Component {
     //this.countdown=this.countdown.bind(this)
     this.lowerSession=this.lowerSession.bind(this)
     this.raiseSession=this.raiseSession.bind(this)
-    //this.startStop=this.startStop.bind(this)
+    this.startStop=this.startStop.bind(this)
 
     
 
@@ -32,9 +32,8 @@ class Clock extends React.Component {
     let minutes=minutesSplit.join('')
 
       console.log(minutes)
-      //console.log(seconds);
+      console.log(seconds);
       //console.log(typeof(seconds))
-      console.log(parseInt(seconds--))
       if (seconds < 0) {
         seconds=59;
         minutes--
@@ -87,7 +86,7 @@ setInterval(function(){
 
         
 
-
+{setInterval(this.startStop, 1000)}
 
 
 
