@@ -1,4 +1,5 @@
-let regex = /:\d\d/
+let secRegex = /:\d\d/
+let minRegex = /\d\d:/
 
 
 class Clock extends React.Component {
@@ -6,7 +7,7 @@ class Clock extends React.Component {
     super(props);
 
     this.state = {
-      currentSessionDisplay: "25"
+      currentSessionDisplay: "25:10"
     }
     
     //this.countdown=this.countdown.bind(this)
@@ -33,13 +34,7 @@ class Clock extends React.Component {
     } */
   
   
-  /*startStop() {
-    let colonSeconds= this.state.currentSessionDisplay.match(regex)
-    let secondsSplit= colonSeconds[0].split('')
-    secondsSplit.shift()
-    let seconds = secondsSplit.join('')
-    let
-  }*/
+  
   
   
 
@@ -59,7 +54,16 @@ raiseSession() {
 }
 
 render() {
- let seconds = this.state.currentSessionDisplay
+  let colonSeconds= this.state.currentSessionDisplay.match(secRegex)
+  let secondsSplit= colonSeconds[0].split('')
+  secondsSplit.shift()
+  let seconds=secondsSplit.join('')
+  let minutesColon= this.state.currentSessionDisplay.match(minRegex)
+  let minutesSplit= minutesColon[0].split('')
+  minutesSplit.pop()
+  let minutes=minutesSplit.join('')
+
+
 /*
 var counter = 10;
 setInterval(function(){
@@ -75,10 +79,14 @@ setInterval(function(){
 
         
 {setInterval(function(){
+
+  console.log(minutes)
   console.log(seconds);
+  //console.log(typeof(seconds))
   seconds--
   if (seconds < 0) {
     seconds=59;
+    minutes--
   }
 }, 1000)};
 
