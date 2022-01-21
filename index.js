@@ -20,18 +20,26 @@ class Clock extends React.Component {
   }
   
 
-  /*startStop() {
+  startStop() {
     
-    let colonSeconds= this.state.currentSessionDisplay.match(regex)
+    let colonSeconds= this.state.currentSessionDisplay.match(secRegex)
     let secondsSplit= colonSeconds[0].split('')
     secondsSplit.shift()
     let seconds=secondsSplit.join('')
-    
-  seconds-=1
-  console.log(seconds)
-      
-  
-    } */
+    let minutesColon= this.state.currentSessionDisplay.match(minRegex)
+    let minutesSplit= minutesColon[0].split('')
+    minutesSplit.pop()
+    let minutes=minutesSplit.join('')
+
+      console.log(minutes)
+      //console.log(seconds);
+      //console.log(typeof(seconds))
+      console.log(parseInt(seconds--))
+      if (seconds < 0) {
+        seconds=59;
+        minutes--
+      }
+    }
   
   
   
@@ -78,17 +86,7 @@ setInterval(function(){
       <div>
 
         
-{setInterval(function(){
 
-  console.log(minutes)
-  console.log(seconds);
-  //console.log(typeof(seconds))
-  seconds--
-  if (seconds < 0) {
-    seconds=59;
-    minutes--
-  }
-}, 1000)};
 
 
 
