@@ -34,8 +34,16 @@ class Clock extends React.Component {
 
     */
 
-myInterval(minutes,seconds) {
+myInterval() {
     setInterval(function(){
+      let colonSeconds= this.state.currentSessionDisplay.match(secRegex)
+      let secondsSplit= colonSeconds[0].split('')
+      secondsSplit.shift()
+      let seconds=secondsSplit.join('')
+      let minutesColon= this.state.currentSessionDisplay.match(minRegex)
+      let minutesSplit= minutesColon[0].split('')
+      minutesSplit.pop()
+      let minutes=minutesSplit.join('')
       
       console.log(minutes)
       console.log(seconds)
@@ -51,7 +59,6 @@ myInterval(minutes,seconds) {
   
 
 lowerSession() {
-  
   this.setState({
     currentSessionDisplay: (parseInt(this.state.currentSessionDisplay) - 1 + ":00")
   })
@@ -64,14 +71,7 @@ raiseSession() {
 }
 
 render() {
-  let colonSeconds= this.state.currentSessionDisplay.match(secRegex)
-  let secondsSplit= colonSeconds[0].split('')
-  secondsSplit.shift()
-  let seconds=secondsSplit.join('')
-  let minutesColon= this.state.currentSessionDisplay.match(minRegex)
-  let minutesSplit= minutesColon[0].split('')
-  minutesSplit.pop()
-  let minutes=minutesSplit.join('')
+ 
  
   return (
     
@@ -80,7 +80,7 @@ render() {
      <h1>25 + 5 Clock</h1>
      {this.state.currentSessionDisplay}
 
-     <button onClick={this.myInterval(minutes,seconds)}>Start/Stop</button>
+     <button onClick={this.myInterval}>Start/Stop</button>
 
      
      
