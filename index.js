@@ -5,7 +5,7 @@ let minRegex = /\d\d:/
 class Clock extends React.Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       currentSessionDisplay: "25:10"
     }
@@ -13,42 +13,45 @@ class Clock extends React.Component {
     //this.countdown=this.countdown.bind(this)
     this.lowerSession=this.lowerSession.bind(this)
     this.raiseSession=this.raiseSession.bind(this)
-    this.startStop=this.startStop.bind(this)
-
+    this.myInterval=this.myInterval.bind(this)
     
+   
 
   }
   
 
-  startStop() {
-    
-    let colonSeconds= this.state.currentSessionDisplay.match(secRegex)
-    let secondsSplit= colonSeconds[0].split('')
-    secondsSplit.shift()
-    let seconds=secondsSplit.join('')
-    let minutesColon= this.state.currentSessionDisplay.match(minRegex)
-    let minutesSplit= minutesColon[0].split('')
-    minutesSplit.pop()
-    let minutes=minutesSplit.join('')
 
+  /*startStop(minutes,seconds) {
       console.log(minutes)
       console.log(seconds);
+      seconds--
       //console.log(typeof(seconds))
       if (seconds < 0) {
         seconds=59;
         minutes--
       }
     }
-  
-  
+
+    */
+
+myInterval(minutes,seconds) {
+    setInterval(function(){
+      
+      console.log(minutes)
+      console.log(seconds)
+      seconds--
+      if (seconds < 0) {
+        seconds=59;
+        minutes--   
+        
+      }
+    }, 1000)};    
   
   
   
 
 lowerSession() {
   
-
-
   this.setState({
     currentSessionDisplay: (parseInt(this.state.currentSessionDisplay) - 1 + ":00")
   })
@@ -69,29 +72,16 @@ render() {
   let minutesSplit= minutesColon[0].split('')
   minutesSplit.pop()
   let minutes=minutesSplit.join('')
-
-
-/*
-var counter = 10;
-setInterval(function(){
-  console.log(counter);
-  counter--
-  if (counter === 0) {
-    console.log("HAPPY NEW YEAR!!");
-  }
-}, 1000); */
-    return (
-      
-      <div>
-
-        
-
-{setInterval(this.startStop, 1000)}
-
-
+ 
+  return (
+    
+    <div>
 
      <h1>25 + 5 Clock</h1>
      {this.state.currentSessionDisplay}
+
+     <button onClick={this.myInterval(minutes,seconds)}>Start/Stop</button>
+
      
      
       <Session 
@@ -99,7 +89,6 @@ setInterval(function(){
         raiseSession = {this.raiseSession}
         currentSessionDisplay ={this.state.currentSessionDisplay}/>
 
-        <button>Start/Stop</button>
   
     </div>
       );
