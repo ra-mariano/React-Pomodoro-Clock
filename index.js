@@ -7,7 +7,7 @@ class Clock extends React.Component {
     super(props);
     
     this.state = {
-      currentSessionDisplay: "25:59",
+      currentSessionDisplay: "25:10",
       otherthingfortest: "Other",
       started: false
     }
@@ -21,36 +21,40 @@ class Clock extends React.Component {
    
   }
   
-    
-componentDidMount() {
   
-  if (this.state.started===true) {
-setInterval(this.myInterval,1000)
-}
-} 
+    
+  componentDidMount() {
+    document.getElementById("start_stop").addEventListener("click", this.startStop)
 
-
-componentDidMount() {
-  document.getElementById("start_stop").addEventListener("click", this.startStop)
-   
- 
-  if (this.state.started===true) {
-    setInterval(this.myInterval,1000)
     }
+  
+  
 
-}
 
 componentWillUnmount() {
-  clearInterval();
+  clearInterval()
 }
 
 startStop() {
- 
+ if (this.state.started===false) {
   this.setState ({
     started: true
   })
-  console.log(this.state.started)
-}  
+  let timer =setInterval(this.myInterval,1000)
+  timer
+} 
+
+else {
+  if (this.state.started===true) 
+  this.setState ({
+    started: false
+  })
+  let timer =setInterval(this.myInterval,1000)
+  clearInterval(timer);
+  }
+}
+ 
+
   
 
 
@@ -64,18 +68,29 @@ myInterval() {
   minutesSplit.pop()
   let minutes=minutesSplit.join('')  
   
+  if (seconds >0) {
       console.log(minutes)
       console.log(seconds)
       seconds-=1
-      if (seconds < 0) {
+  }
+      else if (seconds <= 0) {
         seconds=59;
         minutes--   
       }
+      else return
+      
+      if (seconds >=10){
       this.setState({
         currentSessionDisplay: minutes+":"+seconds,
-        started: true
       })
+    }
+    else {this.setState({
+      currentSessionDisplay: minutes+":0"+seconds,
+    })
+    
+
   }
+}
 
 
 lowerSession() {
