@@ -12,50 +12,48 @@ class Clock extends React.Component {
       started: false
     }
     
-    //this.countdown=this.countdown.bind(this)
     this.lowerSession=this.lowerSession.bind(this)
     this.raiseSession=this.raiseSession.bind(this)
     this.myInterval=this.myInterval.bind(this)
-    this.otherThing=this.otherThing.bind(this)
+    this.startStop=this.startStop.bind(this)
+  
     
    
   }
   
-
-
-  /*startStop(minutes,seconds) {
-      console.log(minutes)
-      console.log(seconds);
-      seconds--
-      //console.log(typeof(seconds))
-      if (seconds < 0) {
-        seconds=59;
-        minutes--
-      }
-    }
-
-    */
-
-
     
 componentDidMount() {
-  let colonSeconds= this.state.currentSessionDisplay.match(secRegex)
-  let secondsSplit= colonSeconds[0].split('')
-  secondsSplit.shift()
-  let seconds=secondsSplit.join('')
-  console.log(seconds)
-  if (this.state.started) {
+  
+  if (this.state.started===true) {
 setInterval(this.myInterval,1000)
 }
-
-else return
 } 
+
+
+componentDidMount() {
+  document.getElementById("start_stop").addEventListener("click", this.startStop)
+   
+ 
+  if (this.state.started===true) {
+    setInterval(this.myInterval,1000)
+    }
+
+}
 
 componentWillUnmount() {
   clearInterval();
 }
 
-    
+startStop() {
+ 
+  this.setState ({
+    started: true
+  })
+  console.log(this.state.started)
+}  
+  
+
+
 myInterval() {  
   let colonSeconds= this.state.currentSessionDisplay.match(secRegex)
   let secondsSplit= colonSeconds[0].split('')
@@ -79,18 +77,6 @@ myInterval() {
       })
   }
 
-    
-
-    //Testing the above explicitly with "25:10" entered instead of "this.state.currenSessionDisplay" only resulted in 25 10 repeated.  So even without the 
-    //currentSessionDisplay undefined issue, the countdown wouldn't work.  Button works but altogether
-    //useless if countdown doesn't work either
-  
-otherThing() {
-  let testVar= this.state.otherthingfortest
-  let sentence = testVar+" thing"
-  console.log(sentence)
-} 
-  
 
 lowerSession() {
   this.setState({
@@ -113,9 +99,9 @@ render() {
      <h1>25 + 5 Clock</h1>
      {this.state.currentSessionDisplay}
 
-     <button onClick={this.myInterval}>Start/Stop</button>
+     <button id="start_stop">Start/Stop</button>
 
-     <button onClick={this.otherThing}>Other Thing</button>
+     
      
       <Session 
         lowerSession = {this.lowerSession}
