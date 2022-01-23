@@ -1,27 +1,32 @@
 let secRegex = /:\d+/
 let minRegex = /\d+:/
 
+//CHANGE NOT SAVED
+//Switchsolution
 
 class Clock extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      currentSessionDisplay: "25:10",
+      currentSessionDisplay: "0:10",
       otherthingfortest: "Other",
-      started: false
+      started: false,
+      defaultSession: "25:00",
+      defaultBreak: "5:00"
     }
     
     this.lowerSession=this.lowerSession.bind(this)
     this.raiseSession=this.raiseSession.bind(this)
+    this.raiseBreak=this.raiseBreak.bind(this)
+    this.lowerBreak=this.lowerBreak.bind(this)
     this.startStop=this.startStop.bind(this)
     this.myInterval=this.myInterval.bind(this)
+    //this.switch=this.switch.bind(this)
   
-    
-   
   }
   
-  
+ 
     
   componentDidMount() {
     document.getElementById("start_stop").addEventListener("click", this.startStop)
@@ -53,8 +58,6 @@ else if (this.state.started===true) {
 }
  
 
-  
-
 
 myInterval() {  
   let colonSeconds= this.state.currentSessionDisplay.match(secRegex)
@@ -74,19 +77,29 @@ myInterval() {
         minutes--   
       }
       
-      if (seconds >=10) {
+      if (seconds >=10 && minutes >=10) {
       this.setState({
         currentSessionDisplay: minutes+":"+seconds,
       })
     }
-    else {
+    else if (minutes >=10 && seconds <10) {
       this.setState({
       currentSessionDisplay: minutes+":0"+seconds,
     })
-    
-
   }
+    else if (minutes <10 && seconds >=10) {
+      this.setState({
+        currentSessionDisplay: minutes+":"+seconds,
+      })
+    }
+    else if (minutes <10 && seconds <10) {
+      this.setState({
+        currentSessionDisplay: minutes+":0"+seconds
+      })
+    }
+    
 }
+
 
 
 lowerSession() {
@@ -101,6 +114,18 @@ raiseSession() {
   })
 }
 
+lowerBreak() {
+  this.setState({
+    currentSessionDisplay: (parseInt(this.state.currentSessionDisplay) - 1 + ":00")
+  })
+}
+
+raiseBreak() {
+  this.setState({
+    currentSessionDisplay: (parseInt(this.state.currentSessionDisplay) + 1 + ":00")
+  })
+}
+
 render() {
  
   return (
@@ -108,16 +133,25 @@ render() {
     <div>
 
      <h1>25 + 5 Clock</h1>
-     {this.state.currentSessionDisplay}
+     
 
      <button id="start_stop">Start/Stop</button>
+
+     <button id="reset">Reset</button>
 
      
      
       <Session 
         lowerSession = {this.lowerSession}
         raiseSession = {this.raiseSession}
-        currentSessionDisplay ={this.state.currentSessionDisplay}/>
+        currentSessionDisplay ={this.state.currentSessionDisplay}
+        defaultSession={this.state.defaultSession}/>
+
+      <Break
+        lowerBreak = {this.lowerBreak}
+        raiseBreak = {this.raiseBreak} 
+        currentSessionDisplay ={this.state.currentSessionDisplay}
+        defaultBreak= {this.state.defaultBreak}/>
 
   
     </div>
@@ -130,14 +164,12 @@ render() {
   class Session extends React.Component {
         constructor(props) {
           super(props);
-      
-  this.state = {
-    sessionLength: "25"
     
-  }
-
+          
+  
   this.lowerSession=this.lowerSession.bind(this)
   this.raiseSession=this.raiseSession.bind(this)
+ 
   
   }
   
@@ -153,6 +185,7 @@ render() {
           render() {
             return (
               <div>
+                {this.props.currentSessionDisplay}
               <h1 id="session-label">Session Length</h1>
               <button id="session-decrement" onClick = {this.lowerSession}>Lower Session Time</button>
               <button id="session-increment" onClick = {this.raiseSession}>Raise Session Time</button>
@@ -161,26 +194,36 @@ render() {
           }
         }
 
-/*class Break extends React.Component {
+class Break extends React.Component {
     constructor(props) {
       super(props);
   
-     this.state = {
-       breakLength: "5"
-     }
+    
+      this.lowerBreak=this.lowerBreak.bind(this)
+      this.raiseBreak=this.raiseBreak.bind(this)
+      
+      }
+      
+      
+      lowerBreak() {
+        this.props.lowerBreak()
+      }
+    
+      raiseBreak() {
+        this.props.raiseBreak()
       }
 
     
       render() {
         return (
           <div>
-          <h1>BREAK LENGTH</h1>
-          <button></button>
-          {this.state.breakLength}          
+          <h1 id="break-label">Break Length</h1>
+          <button id="break-decrement" onClick = {this.lowerBreak}>Lower Break Time</button>
+          <button id="break-increment" onClick = {this.raiseBreak}>Raise Break Time</button>        
           </div>
         )
       }
-    }*/
+    }
 
 
   
