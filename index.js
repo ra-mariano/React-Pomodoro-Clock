@@ -1,5 +1,5 @@
 let secRegex = /:\d+/
-let minRegex = /\d\d:/
+let minRegex = /\d+:/
 
 
 class Clock extends React.Component {
@@ -14,8 +14,8 @@ class Clock extends React.Component {
     
     this.lowerSession=this.lowerSession.bind(this)
     this.raiseSession=this.raiseSession.bind(this)
-    this.myInterval=this.myInterval.bind(this)
     this.startStop=this.startStop.bind(this)
+    this.myInterval=this.myInterval.bind(this)
   
     
    
@@ -25,14 +25,13 @@ class Clock extends React.Component {
     
   componentDidMount() {
     document.getElementById("start_stop").addEventListener("click", this.startStop)
-
     }
   
   
 
 
 componentWillUnmount() {
-  clearInterval()
+  clearInterval(this.timer)
 }
 
 startStop() {
@@ -40,18 +39,17 @@ startStop() {
   this.setState ({
     started: true
   })
-  let timer =setInterval(this.myInterval,1000)
-  timer
+  this.timer = setInterval(this.myInterval,1000)
 } 
 
-else {
-  if (this.state.started===true) 
+else if (this.state.started===true) {
   this.setState ({
     started: false
   })
-  let timer =setInterval(this.myInterval,1000)
-  clearInterval(timer);
-  }
+  clearInterval(this.timer)
+ 
+  
+}
 }
  
 
@@ -68,23 +66,21 @@ myInterval() {
   minutesSplit.pop()
   let minutes=minutesSplit.join('')  
   
-  if (seconds >0) {
-      console.log(minutes)
-      console.log(seconds)
+    if (seconds >0) {
       seconds-=1
   }
-      else if (seconds <= 0) {
+    else if (seconds <= 0) {
         seconds=59;
         minutes--   
       }
-      else return
       
-      if (seconds >=10){
+      if (seconds >=10) {
       this.setState({
         currentSessionDisplay: minutes+":"+seconds,
       })
     }
-    else {this.setState({
+    else {
+      this.setState({
       currentSessionDisplay: minutes+":0"+seconds,
     })
     
