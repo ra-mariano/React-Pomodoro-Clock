@@ -1,4 +1,4 @@
-let secRegex = /:\d\d/
+let secRegex = /:\d+/
 let minRegex = /\d\d:/
 
 
@@ -7,16 +7,18 @@ class Clock extends React.Component {
     super(props);
     
     this.state = {
-      currentSessionDisplay: "25:10"
+      currentSessionDisplay: "25:59",
+      otherthingfortest: "Other",
+      started: false
     }
     
     //this.countdown=this.countdown.bind(this)
     this.lowerSession=this.lowerSession.bind(this)
     this.raiseSession=this.raiseSession.bind(this)
     this.myInterval=this.myInterval.bind(this)
+    this.otherThing=this.otherThing.bind(this)
     
    
-
   }
   
 
@@ -34,28 +36,60 @@ class Clock extends React.Component {
 
     */
 
-myInterval() {
-    setInterval(function(){
-      let colonSeconds= this.state.currentSessionDisplay.match(secRegex)
-      let secondsSplit= colonSeconds[0].split('')
-      secondsSplit.shift()
-      let seconds=secondsSplit.join('')
-      let minutesColon= this.state.currentSessionDisplay.match(minRegex)
-      let minutesSplit= minutesColon[0].split('')
-      minutesSplit.pop()
-      let minutes=minutesSplit.join('')
-      
+
+    
+componentDidMount() {
+  let colonSeconds= this.state.currentSessionDisplay.match(secRegex)
+  let secondsSplit= colonSeconds[0].split('')
+  secondsSplit.shift()
+  let seconds=secondsSplit.join('')
+  console.log(seconds)
+  if (this.state.started) {
+setInterval(this.myInterval,1000)
+}
+
+else return
+} 
+
+componentWillUnmount() {
+  clearInterval();
+}
+
+    
+myInterval() {  
+  let colonSeconds= this.state.currentSessionDisplay.match(secRegex)
+  let secondsSplit= colonSeconds[0].split('')
+  secondsSplit.shift()
+  let seconds=secondsSplit.join('')
+  let minutesColon= this.state.currentSessionDisplay.match(minRegex)
+  let minutesSplit= minutesColon[0].split('')
+  minutesSplit.pop()
+  let minutes=minutesSplit.join('')  
+  
       console.log(minutes)
       console.log(seconds)
-      seconds--
+      seconds-=1
       if (seconds < 0) {
         seconds=59;
         minutes--   
-        
       }
-    }, 1000)};    
+      this.setState({
+        currentSessionDisplay: minutes+":"+seconds,
+        started: true
+      })
+  }
+
+    
+
+    //Testing the above explicitly with "25:10" entered instead of "this.state.currenSessionDisplay" only resulted in 25 10 repeated.  So even without the 
+    //currentSessionDisplay undefined issue, the countdown wouldn't work.  Button works but altogether
+    //useless if countdown doesn't work either
   
-  
+otherThing() {
+  let testVar= this.state.otherthingfortest
+  let sentence = testVar+" thing"
+  console.log(sentence)
+} 
   
 
 lowerSession() {
@@ -72,7 +106,6 @@ raiseSession() {
 
 render() {
  
- 
   return (
     
     <div>
@@ -82,7 +115,7 @@ render() {
 
      <button onClick={this.myInterval}>Start/Stop</button>
 
-     
+     <button onClick={this.otherThing}>Other Thing</button>
      
       <Session 
         lowerSession = {this.lowerSession}
@@ -171,3 +204,4 @@ render() {
 
 
   ReactDOM.render(<Clock/>, document.getElementById("app"))
+
