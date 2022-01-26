@@ -31,7 +31,8 @@ render() {
     currentBreakLength: "05:00",
     currentBreakDisplay: "03:00",
     broken: true,
-    started: false
+    started: false,
+    reset: false
 
   }        
   
@@ -41,6 +42,7 @@ render() {
   this.raiseBreak=this.raiseBreak.bind(this)
   this.startStop=this.startStop.bind(this)
   this.myInterval=this.myInterval.bind(this)
+  this.reset=this.reset.bind(this)
 }
 
 lowerSession() {
@@ -81,6 +83,7 @@ raiseBreak() {
 
 componentDidMount() {
   document.getElementById("start_stop").addEventListener("click", this.startStop)
+  document.getElementById("reset").addEventListener("click", this.reset)
   }
 
 componentWillUnmount() {
@@ -209,6 +212,16 @@ console.log(typeof(sessionSeconds))
 
   else {console.log("other")}
 }
+
+reset() {
+  this.setState(state=>({
+    currentSessionDisplay: state.currentSessionLength,
+    currentBreakDisplay: state.currentBreakLength,
+    started: false
+  }))
+  clearInterval(this.timer)
+  
+}
  
 render() {
   return (
@@ -245,11 +258,12 @@ class Display extends React.Component {
     }
     
    render() {
+     let countdown
      if (this.props.broken==true) {
-       let countdown = this.props.currentSessionDisplay
+       countdown = this.props.currentSessionDisplay
      }
      else if (this.props.broken==false) {
-       let countdown = this.props.currentBreakDisplay
+       countdown = this.props.currentBreakDisplay
      }
         return (
           <div>
@@ -257,6 +271,7 @@ class Display extends React.Component {
           <h2>Break Value {this.props.currentBreakDisplay}</h2> 
           <h1>{countdown}</h1> 
           <button id="start_stop">Start/Stop</button>  
+          <button id="reset">Reset</button>
          </div>
   
         )
