@@ -212,8 +212,8 @@ console.log(typeof(sessionSeconds))
 
  else if (breakMinutes>=0 && breakSeconds >0 && this.state.broken==false) {
    
+   breakSeconds-=1
    if (breakSeconds<10) {
-        breakSeconds-=1
       this.setState(state=>({
         currentBreakDisplay: breakMinutes+":0"+breakSeconds
       }))
@@ -229,7 +229,7 @@ console.log(typeof(sessionSeconds))
       })
     }
     }
-    else if (breakMinutes<10 && breakSeconds == 0 && this.state.broken==false) {
+    else if (breakMinutes<10 && breakMinutes>0 && breakSeconds == 0 && this.state.broken==false) {
       breakSeconds="59"
       breakMinutes--  
       this.setState({
