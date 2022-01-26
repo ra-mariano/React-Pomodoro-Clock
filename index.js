@@ -26,7 +26,7 @@ render() {
           super(props);
     
   this.state= {
-    currentSessionLength: "2:00",
+    currentSessionLength: "02:00",
     currentSessionDisplay: "00:05",
     currentBreakLength: "05:00",
     currentBreakDisplay: "03:00",
@@ -46,7 +46,15 @@ render() {
 }
 
 lowerSession() {
-  if (parseInt(this.state.currentSessionLength) >1) {
+  if(parseInt(this.state.currentSessionLength)>1 && parseInt(this.state.currentSessionLength)<=10) {
+    this.setState({
+      currentSessionLength: ("0"+ (parseInt(this.state.currentSessionLength) -1) + ":00"),
+      currentSessionDisplay: ("0"+ (parseInt(this.state.currentSessionLength) -1) + ":00"),
+      
+    })
+
+  }
+  else if (parseInt(this.state.currentSessionLength) >1) {
   this.setState({
     currentSessionLength: (parseInt(this.state.currentSessionLength) - 1 + ":00"),
     currentSessionDisplay: (parseInt(this.state.currentSessionLength) - 1 + ":00")
@@ -56,14 +64,30 @@ else return
 }
 
 raiseSession() {
-  this.setState({
+  if(parseInt(this.state.currentSessionLength)<9) {
+    this.setState({
+      currentSessionLength: ("0"+ (parseInt(this.state.currentSessionLength) +1) + ":00"),
+      currentSessionDisplay: ("0" +(parseInt(this.state.currentSessionLength) +1) + ":00"),
+      
+    })
+
+  }
+  else return this.setState({
     currentSessionLength: (parseInt(this.state.currentSessionLength) + 1 + ":00"),
     currentSessionDisplay: (parseInt(this.state.currentSessionLength) + 1 + ":00")
   })
 }
 
 lowerBreak() {
-  if (parseInt(this.state.currentBreakLength) >1) {
+  if(parseInt(this.state.currentBreakLength)>1 && parseInt(this.state.currentBreakLength)<=10) {
+    this.setState({
+      currentBreakLength: ("0"+ (parseInt(this.state.currentBreakLength) -1) + ":00"),
+      currentBreakDisplay: ("0"+ (parseInt(this.state.currentBreakLength) -1) + ":00"),
+      
+    })
+
+  }
+  else if (parseInt(this.state.currentBreakLength) >=10) {
   this.setState({
     currentBreakLength: (parseInt(this.state.currentBreakLength) - 1 + ":00"),
     currentBreakDisplay: (parseInt(this.state.currentBreakLength) - 1 + ":00")
@@ -73,11 +97,21 @@ else return
 }
 
 raiseBreak() {
+  if(parseInt(this.state.currentBreakLength)<9) {
+    this.setState({
+      currentBreakLength: ("0"+ (parseInt(this.state.currentBreakLength) +1) + ":00"),
+      currentBreakDisplay: ("0" +(parseInt(this.state.currentBreakLength) +1) + ":00"),
+      
+    })
+
+  }
+  else return (
   this.setState({
     currentBreakLength: (parseInt(this.state.currentBreakLength) + 1 + ":00"),
     currentBreakDisplay: (parseInt(this.state.currentBreakLength) + 1 + ":00"),
     
   })
+  )
 }
   
 
@@ -163,7 +197,7 @@ console.log(typeof(sessionSeconds))
       sessionSeconds="59"
       sessionMinutes-- 
       this.setState({
-        currentSessionDisplay: sessionMinutes+":"+sessionSeconds
+        currentSessionDisplay: "0"+sessionMinutes+":"+sessionSeconds
       }) 
     }
 
@@ -177,16 +211,16 @@ console.log(typeof(sessionSeconds))
     }
 
  else if (breakMinutes>=0 && breakSeconds >0 && this.state.broken==false) {
-      breakSeconds-=1
-      
-      if (breakSeconds<10) {
+   
+   if (breakSeconds<10) {
+        breakSeconds-=1
       this.setState(state=>({
         currentBreakDisplay: breakMinutes+":0"+breakSeconds
       }))
     }
-    else if (breakMinutes<10) {
+    else if (breakMinutesSplit.length<2) {
       this.setState({
-        currentBreakDisplay: +breakMinutes+":"+breakSeconds //Still adding literal 0s if "0"+ is added to beginning
+        currentBreakDisplay: "0"+breakMinutes+":"+breakSeconds //Still adding literal 0s if "0"+ is added to beginning
       })
     }
       else {
@@ -195,13 +229,19 @@ console.log(typeof(sessionSeconds))
       })
     }
     }
-    else if (breakMinutes>0 && breakSeconds == 0 && this.state.broken==false) {
-      console.log("this")
+    else if (breakMinutes<10 && breakSeconds == 0 && this.state.broken==false) {
       breakSeconds="59"
       breakMinutes--  
       this.setState({
-        currentBreakDisplay: breakMinutes+":"+breakSeconds
+        currentBreakDisplay: "0"+breakMinutes+":"+breakSeconds
       })
+  }
+  else if (breakMinutes>=10 && breakSeconds == 0 && this.state.broken==false) {
+    breakSeconds="59"
+    breakMinutes--  
+    this.setState({
+      currentBreakDisplay: +breakMinutes+":"+breakSeconds
+    })
   }
     else if (breakMinutes== 0 && breakSeconds == 0 && this.state.broken==false) {
       this.setState({
