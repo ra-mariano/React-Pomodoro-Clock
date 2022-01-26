@@ -145,7 +145,7 @@ console.log(typeof(sessionSeconds))
   else if (sessionMinutes<10) {
     sessionSeconds-=1
    this.setState({
-      currentSessionDisplay: "0"+sessionMinutes+":"+sessionSeconds
+      currentSessionDisplay: +sessionMinutes+":"+sessionSeconds
     })
   }
     else {
@@ -158,7 +158,10 @@ console.log(typeof(sessionSeconds))
 
   else if (sessionMinutes> 0 && sessionSeconds ==0 && this.state.broken==true) {
       sessionSeconds="59"
-      sessionMinutes--  
+      sessionMinutes-- 
+      this.setState({
+        currentSessionDisplay: sessionMinutes+":"+sessionSeconds
+      }) 
     }
 
    
@@ -170,17 +173,17 @@ console.log(typeof(sessionSeconds))
       console.log(this.state.broken)
     }
 
- if (breakMinutes>=0 && breakSeconds >0 && this.state.broken==false) {
+ else if (breakMinutes>=0 && breakSeconds >0 && this.state.broken==false) {
       breakSeconds-=1
       
       if (breakSeconds<10) {
-      this.setState({
+      this.setState(state=>({
         currentBreakDisplay: breakMinutes+":0"+breakSeconds
-      })
+      }))
     }
     else if (breakMinutes<10) {
       this.setState({
-        currentBreakDisplay: "0"+breakMinutes+":"+breakSeconds
+        currentBreakDisplay: +breakMinutes+":"+breakSeconds //Still adding literal 0s if "0"+ is added to beginning
       })
     }
       else {
@@ -189,10 +192,13 @@ console.log(typeof(sessionSeconds))
       })
     }
     }
-    else if (parseInt(breakMinutes)> 0 && parseInt(breakSeconds) == 0 && this.state.broken==true) {
+    else if (breakMinutes>0 && breakSeconds == 0 && this.state.broken==false) {
+      console.log("this")
       breakSeconds="59"
       breakMinutes--  
-   
+      this.setState({
+        currentBreakDisplay: breakMinutes+":"+breakSeconds
+      })
   }
     else if (breakMinutes== 0 && breakSeconds == 0 && this.state.broken==false) {
       this.setState({
@@ -223,6 +229,7 @@ render() {
     currentSessionDisplay ={this.state.currentSessionDisplay}
     currentBreakLength= {this.state.currentBreakLength}
     currentBreakDisplay = {this.state.currentBreakDisplay}
+    broken = {this.state.broken}
     />
 </div>
   )
@@ -238,10 +245,17 @@ class Display extends React.Component {
     }
     
    render() {
+     if (this.props.broken==true) {
+       let countdown = this.props.currentSessionDisplay
+     }
+     else if (this.props.broken==false) {
+       let countdown = this.props.currentBreakDisplay
+     }
         return (
           <div>
-          <h1>Session Display {this.props.currentSessionDisplay}</h1>  
-          <h1>Break Display {this.props.currentBreakDisplay}</h1>  
+          <h2>Session Value {this.props.currentSessionDisplay}</h2>  
+          <h2>Break Value {this.props.currentBreakDisplay}</h2> 
+          <h1>{countdown}</h1> 
           <button id="start_stop">Start/Stop</button>  
          </div>
   
