@@ -26,10 +26,12 @@ render() {
           super(props);
     
   this.state= {
-    currentSessionLength: "02:00",
+    currentSessionLength: "25:00",
     currentSessionDisplay: "00:05",
     currentBreakLength: "05:00",
     currentBreakDisplay: "03:00",
+    defaultSessionLength: "25:00",
+    defaultBreakLength: "05:00",
     broken: true,
     started: false,
     reset: false
@@ -254,8 +256,10 @@ console.log(typeof(sessionSeconds))
 
 reset() {
   this.setState(state=>({
-    currentSessionDisplay: state.currentSessionLength,
-    currentBreakDisplay: state.currentBreakLength,
+    currentSessionDisplay: state.defaultSessionLength,
+    currentBreakDisplay: state.defaultBreakLength,
+    currentSessionLength: state.defaultSessionLength,
+    currentBreakLength: state.defaultBreakLength,
     started: false
   }))
   clearInterval(this.timer)
@@ -267,12 +271,12 @@ render() {
 
     <div>
  <h1 id="session-label">Session Length</h1>
-      {this.state.currentSessionLength}
+      <h3 id="session-length">{parseInt(this.state.currentSessionLength)}</h3>
       <button id="session-decrement" onClick = {this.lowerSession}>Lower Session Time</button>
       <button id="session-increment" onClick = {this.raiseSession}>Raise Session Time</button>
 
       <h1 id="break-label">Break Length</h1>
-          {this.state.currentBreakLength}
+        <h3 id="break-length">{parseInt(this.state.currentBreakLength)}</h3>
       <button id="break-decrement" onClick = {this.lowerBreak}>Lower Break Time</button>
       <button id="break-increment" onClick = {this.raiseBreak}>Raise Break Time</button>
 
@@ -308,7 +312,7 @@ class Display extends React.Component {
           <div>
           <h2>Session Value {this.props.currentSessionDisplay}</h2>  
           <h2>Break Value {this.props.currentBreakDisplay}</h2> 
-          <h1>{countdown}</h1> 
+          <h1 id="time-left">{countdown}</h1> 
           <button id="start_stop">Start/Stop</button>  
           <button id="reset">Reset</button>
          </div>
