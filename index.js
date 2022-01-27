@@ -160,11 +160,11 @@ breakMinutesSplit.pop()
 let breakMinutes=breakMinutesSplit.join('')  
 
 
-console.log(sessionMinutes)
+/*console.log(sessionMinutes)
 console.log(sessionSeconds)
 console.log(parseInt(breakMinutes))
 console.log(breakSeconds)
-console.log(typeof(sessionSeconds))
+console.log(typeof(sessionSeconds))*/
 
 
 
@@ -267,6 +267,7 @@ reset() {
     started: false
   }))
   clearInterval(this.timer)
+  document.getElementById("beep").load() 
   
 }
  
@@ -315,6 +316,7 @@ class Display extends React.Component {
     }
     
    render() {
+     console.log(parseInt(this.props.currentSessionDisplay))
      let countdown
      let label
      if (this.props.broken==true) {
@@ -325,6 +327,11 @@ class Display extends React.Component {
        countdown = this.props.currentBreakDisplay
        label = "BREAK"
      }
+     if (this.props.currentSessionDisplay=="01:00" || this.props.currentBreakDisplay=="01:00") {
+      
+      document.getElementById("beep").play() 
+     }
+
         return (
           <div>
           <h2 id="session-value">Session Value {this.props.currentSessionDisplay}</h2>  
@@ -335,6 +342,7 @@ class Display extends React.Component {
           <button className="btn2" id="start_stop"><i className="fa fa-play fa-2x" />
             <i className="fa fa-pause fa-2x" /></button>  
           <button id="reset"><img id="reseticon" src="https://www.iconninja.com/files/369/419/676/loop-icon.png" /></button>
+          <audio id="beep" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3"></audio>
           </div>
          </div>
   
