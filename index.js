@@ -163,20 +163,19 @@ console.log(typeof(sessionSeconds))
 
 
   if (parseInt(sessionMinutes)>=0 && sessionSeconds >0 && this.state.broken==true) {
-    if (sessionSeconds<10) {
-      sessionSeconds-=1
-    this.setState({
-      currentSessionDisplay: sessionMinutes+":0"+sessionSeconds
-    })
-  }
-  else if (sessionMinutesSplit.length<2) {
     sessionSeconds-=1
+    if (sessionSeconds<10) {
+    this.setState(state=>({
+      currentSessionDisplay: sessionMinutes+":0"+sessionSeconds
+    }))
+  }
+  else if (sessionMinutesSplit.length<2 && sessionSeconds >0) {
+    
    this.setState({
       currentSessionDisplay: "0"+sessionMinutes+":"+sessionSeconds
     })
   }
     else {
-      sessionSeconds-=1
      this.setState({
       currentSessionDisplay: sessionMinutes+":"+sessionSeconds
     })
@@ -197,7 +196,7 @@ console.log(typeof(sessionSeconds))
         currentBreakDisplay: this.state.currentBreakLength,
         broken: false
       })
-      console.log(this.state.broken)
+      
     }
 
  else if (breakMinutes>=0 && breakSeconds >0 && this.state.broken==false) {
