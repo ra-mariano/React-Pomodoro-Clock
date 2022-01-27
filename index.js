@@ -10,8 +10,7 @@ class Clock extends React.Component {
     
 render() { 
   return (   
-    <div>
-     <h1>25 + 5 Clock</h1>
+    <div id ="container">
       <SessionBreak />
     </div>
       );
@@ -273,7 +272,7 @@ reset() {
  
 render() {
   return (
-    <div id="container">
+    <div id="clockcontainer">
       <div id="clock">
 <div id="sessandbreak">
 <div id="session-box">
@@ -301,7 +300,8 @@ render() {
     broken = {this.state.broken}
     />
     </div>
-</div>
+    </div>
+
   )
 }
 
@@ -324,11 +324,14 @@ class Display extends React.Component {
      }
         return (
           <div>
-          <h2>Session Value {this.props.currentSessionDisplay}</h2>  
-          <h2>Break Value {this.props.currentBreakDisplay}</h2> 
+          <h2 id="session-value">Session Value {this.props.currentSessionDisplay}</h2>  
+          <h2 id="break-value">Break Value {this.props.currentBreakDisplay}</h2> 
           <h1 id="time-left">{countdown}</h1> 
-          <button id="start_stop">Start/Stop</button>  
-          <button id="reset">Reset</button>
+        <div id="controlpanel">
+          <button className="btn2" id="start_stop"><i className="fa fa-play fa-2x" />
+            <i className="fa fa-pause fa-2x" /></button>  
+          <button id="reset"><img id="reseticon" src="https://www.iconninja.com/files/369/419/676/loop-icon.png" /></button>
+          </div>
          </div>
   
         )
