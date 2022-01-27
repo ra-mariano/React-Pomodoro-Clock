@@ -182,15 +182,22 @@ console.log(typeof(sessionSeconds))
   }
 }
 
-  else if (sessionMinutes> 0 && sessionSeconds ==0 && this.state.broken==true) {
+  else if (sessionMinutes> 0 && sessionMinutes<=10 && sessionSeconds ==0 && this.state.broken==true) {
+      sessionSeconds="59"
+      sessionMinutes-- 
+      this.setState({
+        currentSessionDisplay: "0" + sessionMinutes+":"+sessionSeconds
+      }) 
+    }
+
+    else if (sessionMinutes>= 10 && sessionSeconds ==0 && this.state.broken==true) {
       sessionSeconds="59"
       sessionMinutes-- 
       this.setState({
         currentSessionDisplay: sessionMinutes+":"+sessionSeconds
       }) 
     }
-
-   
+    
     else if (sessionMinutes== 0 && sessionSeconds ==0 && this.state.broken==true) {
       this.setState({
         currentBreakDisplay: this.state.currentBreakLength,
@@ -219,14 +226,22 @@ console.log(typeof(sessionSeconds))
       })
     }
     }
-    else if (breakMinutes>0 && breakSeconds == 0 && this.state.broken==false) {
+    else if (breakMinutes>0 && breakMinutes<=10 && breakSeconds == 0 && this.state.broken==false) {
       console.log("this")
       breakSeconds="59"
       breakMinutes--  
       this.setState({
-        currentBreakDisplay: breakMinutes+":"+breakSeconds
+        currentBreakDisplay: "0"+breakMinutes+":"+breakSeconds
       })
   }
+  else if (breakMinutes>=10 && breakSeconds == 0 && this.state.broken==false) {
+    console.log("this")
+    breakSeconds="59"
+    breakMinutes--  
+    this.setState({
+      currentBreakDisplay: breakMinutes+":"+breakSeconds
+    })
+}
     else if (breakMinutes== 0 && breakSeconds == 0 && this.state.broken==false) {
       this.setState({
         currentSessionDisplay: this.state.currentSessionLength,
