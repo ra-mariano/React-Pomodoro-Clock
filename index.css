@@ -1,0 +1,48 @@
+#clock {
+  background-color: blueviolet;
+  width: 700px;
+  margin: auto;
+}
+
+#sessandbreak {
+  background-color: burlywood;
+  width: 600px;
+  display: flex;
+  justify-content: space-around;
+  margin:auto
+
+}
+
+#session-box {
+ 
+  border-style: solid;
+  border-color: rgb(2, 2, 37);
+  border-width: 5px;
+  }
+
+#break-box {
+  border-style: solid;
+  border-color: rgb(2, 2, 37);
+  border-width: 5px;
+  }
+
+
+#session-adjust {
+  display: flex;
+  justify-content: space-around 
+}
+
+#break-adjust {
+  display: flex;
+  justify-content: space-around 
+}
+
+
+.btn {
+  background-color: DodgerBlue; /* Blue background */
+  border-radius: 50%;
+  border: none;
+  color: white; 
+  font-size: 30px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+}

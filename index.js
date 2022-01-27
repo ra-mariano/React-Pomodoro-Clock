@@ -27,9 +27,9 @@ render() {
     
   this.state= {
     currentSessionLength: "25:00",
-    currentSessionDisplay: "00:05",
+    currentSessionDisplay: "25:00",
     currentBreakLength: "05:00",
-    currentBreakDisplay: "03:00",
+    currentBreakDisplay: "05:00",
     defaultSessionLength: "25:00",
     defaultBreakLength: "05:00",
     broken: true,
@@ -71,10 +71,13 @@ raiseSession() {
       currentSessionDisplay: ("0" + (parseInt(this.state.currentSessionLength) + 1) + ":00")
     })
   }
- else return this.setState({
+ else  if (parseInt(this.state.currentSessionLength) >=9 && (parseInt(this.state.currentSessionLength)<60)) {
+ return this.setState({
     currentSessionLength: (parseInt(this.state.currentSessionLength) + 1 + ":00"),
     currentSessionDisplay: (parseInt(this.state.currentSessionLength) + 1 + ":00")
   })
+}
+else return
 }
 
 lowerBreak() {
@@ -100,11 +103,13 @@ raiseBreak() {
       currentBreakDisplay: ("0" + (parseInt(this.state.currentBreakLength) + 1) + ":00")
     })
   }
-  else return this.setState({
-    currentBreakLength: (parseInt(this.state.currentBreakLength) + 1 + ":00"),
-    currentBreakDisplay: (parseInt(this.state.currentBreakLength) + 1 + ":00"),
-    
-  })
+  else if (parseInt(this.state.currentBreakLength) >=9 && parseInt(this.state.currentBreakLength)<60) {
+    this.setState ({
+      currentBreakLength: ((parseInt(this.state.currentBreakLength) + 1) + ":00"),
+      currentBreakDisplay: ((parseInt(this.state.currentBreakLength) + 1) + ":00")
+    })
+  }
+  else return 
 }
   
 
@@ -268,18 +273,26 @@ reset() {
  
 render() {
   return (
-
-    <div>
+    <div id="container">
+      <div id="clock">
+<div id="sessandbreak">
+<div id="session-box">
  <h1 id="session-label">Session Length</h1>
+ <div id="session-adjust">
+      <button className="btn" id="session-decrement" onClick = {this.lowerSession}><i className="fas fa-arrow-alt-circle-down"></i></button>
       <h3 id="session-length">{parseInt(this.state.currentSessionLength)}</h3>
-      <button id="session-decrement" onClick = {this.lowerSession}>Lower Session Time</button>
-      <button id="session-increment" onClick = {this.raiseSession}>Raise Session Time</button>
-
+      <button className="btn" id="session-increment" onClick = {this.raiseSession}><i className="fas fa-arrow-alt-circle-up"></i></button>
+</div>
+</div>
+<div id="break-box">
       <h1 id="break-label">Break Length</h1>
+      <div id="break-adjust">
+      <button className="btn" id="break-decrement" onClick = {this.lowerBreak}><i className="fas fa-arrow-alt-circle-down"></i></button>
         <h3 id="break-length">{parseInt(this.state.currentBreakLength)}</h3>
-      <button id="break-decrement" onClick = {this.lowerBreak}>Lower Break Time</button>
-      <button id="break-increment" onClick = {this.raiseBreak}>Raise Break Time</button>
-
+      <button className="btn" id="break-increment" onClick = {this.raiseBreak}><i className="fas fa-arrow-alt-circle-up"></i></button>
+      </div>
+</div>
+</div>
     <Display
     currentSessionLength= {this.state.currentSessionLength}
     currentSessionDisplay ={this.state.currentSessionDisplay}
@@ -287,6 +300,7 @@ render() {
     currentBreakDisplay = {this.state.currentBreakDisplay}
     broken = {this.state.broken}
     />
+    </div>
 </div>
   )
 }
