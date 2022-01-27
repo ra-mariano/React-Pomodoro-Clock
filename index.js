@@ -316,16 +316,20 @@ class Display extends React.Component {
     
    render() {
      let countdown
+     let label
      if (this.props.broken==true) {
        countdown = this.props.currentSessionDisplay
+       label = "SESSION"
      }
      else if (this.props.broken==false) {
        countdown = this.props.currentBreakDisplay
+       label = "BREAK"
      }
         return (
           <div>
           <h2 id="session-value">Session Value {this.props.currentSessionDisplay}</h2>  
           <h2 id="break-value">Break Value {this.props.currentBreakDisplay}</h2> 
+          <h1 id="countdown-label">{label}</h1>
           <h1 id="time-left">{countdown}</h1> 
         <div id="controlpanel">
           <button className="btn2" id="start_stop"><i className="fa fa-play fa-2x" />

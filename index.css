@@ -9,6 +9,8 @@ h1 {
   font-size: 30px;
 }
 
+
+
 h3 {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: 900;
@@ -87,10 +89,11 @@ h3 {
 padding: 10px 10px 10px 10px;
   border-style: solid;
   border-color: rgb(2, 2, 37);
-  border-width: 4px;
+  border-width: 3px;
   border-radius: 12px;
   width: 250px;
   text-align: center;
+  background-image: linear-gradient(to bottom right, rgb(197, 25, 231), rgb(252, 141, 224));
   }
 
 
@@ -99,11 +102,12 @@ padding: 10px 10px 10px 10px;
   padding: 10px 10px 10px 10px;
   border-style: solid;
   border-color: rgb(2, 2, 37);
-  border-width: 4px;
+  border-width: 3px;
   border-radius: 10px;
   box-sizing: content-box;
   width: 250px;
   text-align: center;
+  background-image: linear-gradient(to bottom right, rgb(197, 25, 231), rgb(252, 141, 224));
   }
 
 
@@ -120,12 +124,17 @@ padding: 10px 10px 10px 10px;
 
 
 .btn {
-  background-color: DodgerBlue; /* Blue background */
+  background-color: DodgerBlue;
   border-radius: 20px;
   border: none;
   color: white; 
   font-size: 40px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
+  cursor: pointer; 
+  box-shadow: 5px 5px 1px pink;
+}
+
+.btn:hover {
+  background-color: rgb(13, 58, 104);
 }
 
 .btn2 {
@@ -133,6 +142,12 @@ padding: 10px 10px 10px 10px;
   background-color: none;
   border-radius: 3%;
   border: none;
+  cursor: pointer;
+}
+
+#countdown-label {
+ text-align: center;
+  
 }
 
 #session-value, #break-value  {
