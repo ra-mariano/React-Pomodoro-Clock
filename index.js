@@ -264,7 +264,8 @@ reset() {
     currentBreakDisplay: state.defaultBreakLength,
     currentSessionLength: state.defaultSessionLength,
     currentBreakLength: state.defaultBreakLength,
-    started: false
+    started: false,
+    broken: true
   }))
   clearInterval(this.timer)
   document.getElementById("beep").load() 
@@ -299,6 +300,7 @@ render() {
     currentBreakLength= {this.state.currentBreakLength}
     currentBreakDisplay = {this.state.currentBreakDisplay}
     broken = {this.state.broken}
+    started= {this.state.started}
     />
     </div>
     </div>
@@ -327,7 +329,7 @@ class Display extends React.Component {
        countdown = this.props.currentBreakDisplay
        label = "BREAK"
      }
-     if (this.props.currentSessionDisplay=="01:00" || this.props.currentBreakDisplay=="01:00") {
+     if ((this.props.currentSessionDisplay=="01:00" || this.props.currentBreakDisplay=="01:00") && this.props.started ==true) {
       
       document.getElementById("beep").play() 
      }
@@ -336,12 +338,12 @@ class Display extends React.Component {
           <div>
           <h2 id="session-value">Session Value {this.props.currentSessionDisplay}</h2>  
           <h2 id="break-value">Break Value {this.props.currentBreakDisplay}</h2> 
-          <h1 id="countdown-label">{label}</h1>
+          <h1 id="timer-label">{label}</h1>
           <h1 id="time-left">{countdown}</h1> 
         <div id="controlpanel">
           <button className="btn2" id="start_stop"><i className="fa fa-play fa-2x" />
             <i className="fa fa-pause fa-2x" /></button>  
-          <button id="reset"><img id="reseticon" src="https://www.iconninja.com/files/369/419/676/loop-icon.png" /></button>
+          <button className="btn2" id="reset"><img id="reseticon" src="https://www.iconninja.com/files/369/419/676/loop-icon.png" /></button>
           <audio id="beep" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3"></audio>
           </div>
          </div>
